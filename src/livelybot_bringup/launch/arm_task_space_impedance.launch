@@ -1,0 +1,33 @@
+<launch>
+
+    <!-- Bota F/T sensor driver -->
+    <include file="$(find rokubimini_serial)/launch/rokubimini_serial.launch" />
+
+    <!-- Load robot driver config -->
+    <rosparam file="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/src/livelybot_description/robot_param/23dof_STM32H730_model_test_Orin_params.yaml"
+              command="load" ns="/" />
+
+    <node name="arm_task_space_impedance" pkg="livelybot_bringup" type="arm_task_space_impedance"
+          output="screen" respawn="false">
+
+        <!-- URDF with identified inertia + friction -->
+        <!-- <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi_identified.urdf" /> -->
+        <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi_identified_with_friction.urdf" />
+
+        <param name="loop_rate"  value="200.0" />
+        <param name="csv_path"   value="/home/hightorque/arm_task_space_impedance.csv" />
+
+        <!-- Task-space gains -->
+        <param name="kp_task"    value="50.0" />
+        <param name="kd_task"    value="1.0" />
+        <param name="knd"        value="1.0" />
+        <param name="grav_scale" value="1.0" />
+
+        <!-- Force control (y-axis) -->
+        <param name="f_ref_y"    value="0.0" />
+        <param name="kf_force"   value="0.0" />
+
+        <!-- F/T sensor topic -->
+        <param name="ft_topic" value="/bus0/ft_sensor0/ft_sensor_readings/wrench" />
+    </node>
+</launch>

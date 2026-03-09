@@ -1,0 +1,25 @@
+<launch>
+    <!-- Load robot driver config -->
+    <rosparam file="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/src/livelybot_description/robot_param/23dof_STM32H730_model_test_Orin_params.yaml"
+              command="load" ns="/" />
+
+    <node name="arm_gravity_comp" pkg="livelybot_bringup" type="arm_gravity_comp"
+          output="screen" respawn="false">
+
+        <!-- URDF -->
+        <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi.urdf" />
+        <!-- <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi_identified.urdf" /> -->
+        <param name="kp"         value="0.0" />
+        <param name="kd"         value="0.0" />
+
+        <!-- Scale factor for gravity torques. Start at 1.0.
+             If arm drifts UP -> model overestimates mass, reduce toward 0.7-0.8
+             If arm drifts DOWN -> model underestimates mass, increase toward 1.2-1.5
+             Fine-tune per-joint by adjusting URDF inertials later. -->
+        <param name="grav_scale" value="1.0" />
+
+        <param name="loop_rate"  value="200.0" />
+        <param name="csv_path"   value="/home/hightorque/arm_gravity_comp.csv" />
+        <param name="fk_path"    value="/home/hightorque/arm_fk_snapshot.csv" />
+    </node>
+</launch>

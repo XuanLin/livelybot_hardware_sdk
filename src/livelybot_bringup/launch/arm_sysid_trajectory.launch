@@ -1,0 +1,36 @@
+<launch>
+    <!-- Load robot driver config -->
+    <rosparam file="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/src/livelybot_description/robot_param/23dof_STM32H730_model_test_Orin_params.yaml"
+              command="load" ns="/" />
+
+    <node name="arm_sysid_trajectory" pkg="livelybot_bringup" type="arm_sysid_trajectory"
+          output="screen" respawn="false">
+
+        <!-- URDF -->
+        <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi.urdf" />
+
+        <!-- Pre-computed trajectory CSV (from generate_trajectory_csv.py) -->
+        <param name="traj_path" value="/home/hightorque/xuan_ws/sysid_trajectory.csv" />
+
+        <!-- PD gains for trajectory tracking.
+             Start conservative! Increase kp if tracking is poor.
+             Too high -> vibration. Too low -> poor tracking. -->
+        <param name="kp"         value="8.0" />
+        <param name="kd"         value="0.5" />
+
+        <!-- Gravity compensation scale (same as your gravity comp tuning) -->
+        <param name="grav_scale" value="1.0" />
+
+        <!-- Time (seconds) for smooth move to trajectory start position -->
+        <param name="move_time"  value="3.0" />
+
+        <!-- Number of trajectory repeats (more = more data, better ID) -->
+        <param name="num_repeats" value="1" />
+
+        <!-- Control loop rate (Hz) - must match trajectory CSV rate -->
+        <param name="loop_rate"  value="200.0" />
+
+        <!-- Output data CSV path -->
+        <param name="csv_path"   value="/home/hightorque/sysid_data.csv" />
+    </node>
+</launch>

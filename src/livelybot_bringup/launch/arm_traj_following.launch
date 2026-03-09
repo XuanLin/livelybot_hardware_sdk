@@ -1,0 +1,18 @@
+<launch>
+    <!-- Load robot driver config -->
+    <rosparam file="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/src/livelybot_description/robot_param/23dof_STM32H730_model_test_Orin_params.yaml"
+              command="load" ns="/" />
+
+    <node name="arm_traj_following" pkg="livelybot_bringup" type="arm_traj_following"
+          output="screen" respawn="false">
+
+        <!-- URDF -->
+        <!-- <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi_arm_activated.urdf" /> -->
+        <!-- <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi_identified.urdf" /> -->
+        <!-- <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi_identified_with_friction.urdf" /> -->
+        <param name="urdf_path" value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi_identified_with_FT.urdf" />
+
+        <param name="loop_rate"  value="200.0" />
+        <param name="csv_path"   value="/home/hightorque/arm_traj_following.csv" />
+    </node>
+</launch>

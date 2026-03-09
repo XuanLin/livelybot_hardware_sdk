@@ -1,0 +1,9 @@
+<launch>
+  <include file='$(find livelybot_description)/launch/livelybot_description.launch' />
+  <node pkg="livelybot_bringup" name="arm_motor_sign_test" type="arm_motor_sign_test" output="screen">
+    <param name="loop_rate"   value="200.0" />
+    <param name="urdf_path"   value="/home/hightorque/xuan_ws/src/livelybot_hardware_sdk/hi.urdf" />
+    <param name="output_dir"  value="/home/hightorque/" />
+  </node>
+</launch>
+
